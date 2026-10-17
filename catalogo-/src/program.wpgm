@@ -1,1 +1,64 @@
+import elementos.*
+import interfaz.*
 
+program catalogoWollok {
+	// 1. Configuración de la pantalla de Wollok Game
+	game.title("Cine & Anime Hub")
+	game.height(9)
+	game.width(9)
+	game.cellSize(80) // Tamaño de celda en píxeles
+	game.boardGround("fondo.png") // Opcional si tienes un fondo
+
+	// 2. Carga del catálogo
+	const aot = new ItemCatalogo(
+		titulo = "Attack on Titan",
+		tipo = "Anime",
+		genero = "Accion",
+		image = "poster1.png",
+		position = game.at(0,0)
+	)
+
+	const interstellar = new ItemCatalogo(
+		titulo = "Interstellar",
+		tipo = "Pelicula",
+		genero = "Sci-Fi",
+		image = "poster2.png",
+		position = game.at(0,0)
+	)
+
+	const chihiro = new ItemCatalogo(
+		titulo = "Spirited Away",
+		tipo = "Anime",
+		genero = "Fantasia",
+		image = "poster3.png",
+		position = game.at(0,0)
+	)
+
+	const matrix = new ItemCatalogo(
+		titulo = "The Matrix",
+		tipo = "Pelicula",
+		genero = "Accion",
+		image = "poster4.png",
+		position = game.at(0,0)
+	)
+
+	gestorCatalogo.agregarItem(aot)
+	gestorCatalogo.agregarItem(interstellar)
+	gestorCatalogo.agregarItem(chihiro)
+	gestorCatalogo.agregarItem(matrix)
+
+	// 3. Controles de Teclado para Filtros
+	keyboard.t().onPressDo({ gestorCatalogo.cambiarFiltro("Todos") })
+	keyboard.p().onPressDo({ gestorCatalogo.cambiarFiltro("Pelicula") })
+	keyboard.a().onPressDo({ gestorCatalogo.cambiarFiltro("Anime") })
+	keyboard.x().onPressDo({ gestorCatalogo.cambiarFiltro("Accion") })
+	keyboard.f().onPressDo({ gestorCatalogo.cambiarFiltro("Fantasia") })
+
+	// 4. Agregar elementos de UI e iniciar
+	game.addVisual(cartelFiltro)
+	game.addVisual(cartelAyuda)
+	
+	gestorCatalogo.redibujar()
+
+	game.start()
+}
